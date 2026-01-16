@@ -410,11 +410,12 @@
               <th>🏢 Floor</th>
               <th>🛤️ Pathway</th>
               <th>📍 Aisle</th>
+              <th>📦 Count</th>
             </tr>
           </thead>
           <tbody id="result">
             <tr>
-              <td colspan="3" class="no-data">👆 Enter a vertical ID to start searching</td>
+              <td colspan="4" class="no-data">👆 Enter a vertical ID to start searching</td>
             </tr>
           </tbody>
         </table>
@@ -423,7 +424,7 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbxpGmwJTfhAG7bPnYFKT6oFQf4BLIoaciilzsLFG1jlFNhu9NKqZO07MHT1IU4ndfXX/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbzXiAlctgUmCkPg8WVFOxsUcFk_q_qM-gQ_iio4aZ18Fr3_6lSQfQA7T-1hDOa5JRzI/exec";
     const input = document.getElementById('vertical');
     const zoneDiv = document.getElementById('zone');
     const tbody = document.getElementById('result');
@@ -442,14 +443,14 @@
       }
       
       zoneDiv.classList.remove('show');
-      tbody.innerHTML = "<tr><td colspan='3' class='loading'><div class='spinner'></div><br>Searching...</td></tr>";
+      tbody.innerHTML = "<tr><td colspan='4' class='loading'><div class='spinner'></div><br>Searching...</td></tr>";
       
       fetch(API_URL + "?vertical=" + encodeURIComponent(vertical))
         .then(res => res.json())
         .then(data => {
           if (data.error) {
             zoneDiv.classList.remove('show');
-            tbody.innerHTML = `<tr><td colspan='3' class='no-data'>❌ ${data.error}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan='4' class='no-data'>❌ ${data.error}</td></tr>`;
             return;
           }
           
@@ -463,23 +464,9 @@
           
           tbody.innerHTML = "";
           if (!data.locations || data.locations.length === 0) {
-            tbody.innerHTML = "<tr><td colspan='3' class='no-data'>No locations available</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='4' class='no-data'>No locations available</td></tr>";
             return;
           }
-          
-          // Sort locations in ascending order
-          data.locations.sort((a, b) => {
-            // First sort by floor
-            if (a.floor !== b.floor) {
-              return String(a.floor).localeCompare(String(b.floor), undefined, { numeric: true });
-            }
-            // Then by pathway
-            if (a.pathway !== b.pathway) {
-              return String(a.pathway).localeCompare(String(b.pathway), undefined, { numeric: true });
-            }
-            // Finally by aisle
-            return String(a.aisle).localeCompare(String(b.aisle), undefined, { numeric: true });
-          });
           
           data.locations.forEach((l, i) => {
             const tr = document.createElement("tr");
@@ -488,13 +475,14 @@
               <td><strong>${l.floor}</strong></td>
               <td>${l.pathway}</td>
               <td>${l.aisle}</td>
+              <td><span class="stat-card">${l.locationCount || 0}</span></td>
             `;
             tbody.appendChild(tr);
           });
         })
         .catch(err => {
           zoneDiv.classList.remove('show');
-          tbody.innerHTML = "<tr><td colspan='3' class='no-data'>⚠️ Connection error. Please try again.</td></tr>";
+          tbody.innerHTML = "<tr><td colspan='4' class='no-data'>⚠️ Connection error. Please try again.</td></tr>";
           console.error(err);
         });
     }
