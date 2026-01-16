@@ -12,99 +12,48 @@
     
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
       min-height: 100vh;
-      padding: 20px;
+      padding: 15px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      z-index: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: drift 20s linear infinite;
+    }
+    
+    @keyframes drift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
     }
     
     .container {
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      margin-bottom: 20px;
-    }
-    
-    h1 {
-      color: #667eea;
-      font-size: 28px;
+    .header {
+      text-align: center;
       margin-bottom: 25px;
-      text-align: center;
-      font-weight: 700;
+      animation: fadeInDown 0.6s ease;
     }
     
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-direction: column;
-    }
-    
-    input {
-      flex: 1;
-      padding: 15px 20px;
-      font-size: 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 12px;
-      outline: none;
-      transition: all 0.3s;
-      width: 100%;
-    }
-    
-    input:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-    }
-    
-    button {
-      padding: 15px 30px;
-      font-size: 16px;
-      font-weight: 600;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s;
-      width: 100%;
-    }
-    
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102,126,234,0.4);
-    }
-    
-    button:active {
-      transform: translateY(0);
-    }
-    
-    .zone-display {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      color: white;
-      padding: 20px;
-      border-radius: 15px;
-      margin: 20px 0;
-      font-size: 20px;
-      font-weight: 600;
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(245,87,108,0.3);
-      display: none;
-    }
-    
-    .zone-display.show {
-      display: block;
-      animation: slideIn 0.4s ease;
-    }
-    
-    @keyframes slideIn {
+    @keyframes fadeInDown {
       from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-30px);
       }
       to {
         opacity: 1;
@@ -112,10 +61,205 @@
       }
     }
     
+    .logo {
+      font-size: 50px;
+      margin-bottom: 10px;
+      animation: bounce 2s ease infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    h1 {
+      color: white;
+      font-size: 32px;
+      font-weight: 800;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      letter-spacing: -0.5px;
+    }
+    
+    .card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 35px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+      animation: scaleIn 0.5s ease;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    .search-box {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 15px;
+    }
+    
+    input {
+      width: 100%;
+      padding: 18px 55px 18px 20px;
+      font-size: 17px;
+      border: 3px solid #e0e0e0;
+      border-radius: 16px;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: white;
+      font-weight: 500;
+    }
+    
+    input:focus {
+      border-color: #7e22ce;
+      box-shadow: 0 0 0 4px rgba(126,34,206,0.1);
+      transform: translateY(-2px);
+    }
+    
+    .search-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+    
+    input:focus + .search-icon {
+      transform: translateY(-50%) scale(1.2);
+    }
+    
+    button {
+      width: 100%;
+      padding: 18px;
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-size: 200% 200%;
+      color: white;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 25px rgba(102,126,234,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(102,126,234,0.6);
+      background-position: 100% 0;
+    }
+    
+    button:active {
+      transform: translateY(-1px);
+    }
+    
+    .zone-display {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 20px;
+      margin: 25px 0;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(245,87,108,0.4);
+      display: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .zone-display::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 3s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .zone-display.show {
+      display: block;
+      animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 8px 18px;
+      margin: 5px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.5);
+      animation: popIn 0.4s ease;
+    }
+    
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
     .table-container {
       overflow-x: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+      animation: slideUp 0.6s ease;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
     table {
@@ -127,79 +271,134 @@
     th {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      padding: 15px;
+      padding: 18px;
       text-align: center;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 14px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
     
     td {
-      padding: 15px;
+      padding: 18px;
       text-align: center;
       border-bottom: 1px solid #f0f0f0;
       color: #333;
-      font-size: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s;
     }
     
     tr:last-child td {
       border-bottom: none;
     }
     
-    tr:hover td {
-      background: #f8f9ff;
+    tbody tr {
+      transition: all 0.3s;
+      animation: fadeInRow 0.5s ease forwards;
+      opacity: 0;
+    }
+    
+    tbody tr:nth-child(1) { animation-delay: 0.1s; }
+    tbody tr:nth-child(2) { animation-delay: 0.2s; }
+    tbody tr:nth-child(3) { animation-delay: 0.3s; }
+    tbody tr:nth-child(4) { animation-delay: 0.4s; }
+    tbody tr:nth-child(5) { animation-delay: 0.5s; }
+    
+    @keyframes fadeInRow {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    tbody tr:hover {
+      background: linear-gradient(90deg, #f8f9ff 0%, #fff 100%);
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(102,126,234,0.2);
     }
     
     .no-data {
-      padding: 40px;
+      padding: 50px;
       text-align: center;
       color: #999;
       font-style: italic;
+      font-size: 16px;
     }
     
     .loading {
       text-align: center;
-      padding: 20px;
+      padding: 50px;
       color: #667eea;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 18px;
     }
     
-    @media (min-width: 768px) {
-      .search-box {
-        flex-direction: row;
-      }
-      
-      button {
-        width: auto;
-        min-width: 120px;
-      }
-      
-      h1 {
-        font-size: 32px;
-      }
-    }
-    
-    .badge {
+    .spinner {
       display: inline-block;
-      padding: 5px 12px;
-      margin: 3px;
-      background: rgba(102,126,234,0.1);
-      color: #667eea;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
+      width: 30px;
+      height: 30px;
+      border: 4px solid rgba(102,126,234,0.2);
+      border-top-color: #667eea;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .stat-card {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 15px;
+      margin: 5px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(102,126,234,0.3);
+      animation: slideIn 0.5s ease;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 26px;
+      }
+      
+      .card {
+        padding: 25px;
+        border-radius: 25px;
+      }
+      
+      th, td {
+        padding: 12px 8px;
+        font-size: 13px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="header">
+      <div class="logo">📦</div>
+      <h1>Zone Finder Pro</h1>
+    </div>
+    
     <div class="card">
-      <h1>🔍 Vertical to Zone Finder</h1>
-      
       <div class="search-box">
-        <input type="text" id="vertical" placeholder="Enter Vertical ID">
-        <button onclick="search()">Search</button>
+        <div class="input-wrapper">
+          <input type="text" id="vertical" placeholder="Enter Vertical ID..." autocomplete="off">
+          <span class="search-icon">🔍</span>
+        </div>
+        <button onclick="search()">Find Zone</button>
       </div>
       
       <div id="zone" class="zone-display"></div>
@@ -208,14 +407,14 @@
         <table>
           <thead>
             <tr>
-              <th>Floor</th>
-              <th>Pathway</th>
-              <th>Aisle</th>
+              <th>🏢 Floor</th>
+              <th>🛤️ Pathway</th>
+              <th>📍 Aisle</th>
             </tr>
           </thead>
           <tbody id="result">
             <tr>
-              <td colspan="3" class="no-data">Enter a vertical to search</td>
+              <td colspan="3" class="no-data">👆 Enter a vertical ID to start searching</td>
             </tr>
           </tbody>
         </table>
@@ -225,51 +424,52 @@
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbxLA55AyewnVgF2ExbA_omXOUkhpzh4qVmNHlgwvNhnoZL94NGkACRDoyCSNh2QWphC/exec";
+    const input = document.getElementById('vertical');
+    const zoneDiv = document.getElementById('zone');
+    const tbody = document.getElementById('result');
     
-    document.getElementById('vertical').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        search();
-      }
+    input.addEventListener('keypress', e => {
+      if (e.key === 'Enter') search();
     });
     
     function search() {
-      const vertical = document.getElementById("vertical").value.trim();
-      const zoneDiv = document.getElementById("zone");
-      const tbody = document.getElementById("result");
+      const vertical = input.value.trim();
       
       if (!vertical) {
-        alert("⚠️ Please enter a vertical ID");
+        input.style.borderColor = '#f5576c';
+        setTimeout(() => input.style.borderColor = '#e0e0e0', 500);
         return;
       }
       
       zoneDiv.classList.remove('show');
-      tbody.innerHTML = "<tr><td colspan='3' class='loading'>🔄 Loading...</td></tr>";
+      tbody.innerHTML = "<tr><td colspan='3' class='loading'><div class='spinner'></div><br>Searching...</td></tr>";
       
       fetch(API_URL + "?vertical=" + encodeURIComponent(vertical))
         .then(res => res.json())
         .then(data => {
           if (data.error) {
             zoneDiv.classList.remove('show');
-            alert("❌ " + data.error);
-            tbody.innerHTML = "<tr><td colspan='3' class='no-data'>No results found</td></tr>";
+            tbody.innerHTML = `<tr><td colspan='3' class='no-data'>❌ ${data.error}</td></tr>`;
             return;
           }
           
           if (data.zones) {
-            zoneDiv.innerHTML = "📍 Zones: " + data.zones.map(z => `<span class="badge">${z}</span>`).join("");
+            zoneDiv.innerHTML = "📍 <strong>Zones Found:</strong><br>" + 
+              data.zones.map(z => `<span class="badge">${z}</span>`).join("");
           } else {
-            zoneDiv.innerHTML = `📍 Zone: <span class="badge">${data.zone}</span>`;
+            zoneDiv.innerHTML = `📍 <strong>Zone:</strong> <span class="badge">${data.zone}</span>`;
           }
           zoneDiv.classList.add('show');
           
           tbody.innerHTML = "";
           if (!data.locations || data.locations.length === 0) {
-            tbody.innerHTML = "<tr><td colspan='3' class='no-data'>No locations found</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='3' class='no-data'>No locations available</td></tr>";
             return;
           }
           
-          data.locations.forEach(l => {
+          data.locations.forEach((l, i) => {
             const tr = document.createElement("tr");
+            tr.style.animationDelay = (i * 0.1) + 's';
             tr.innerHTML = `
               <td><strong>${l.floor}</strong></td>
               <td>${l.pathway}</td>
@@ -280,8 +480,7 @@
         })
         .catch(err => {
           zoneDiv.classList.remove('show');
-          alert("❌ Error connecting to API");
-          tbody.innerHTML = "<tr><td colspan='3' class='no-data'>Connection error</td></tr>";
+          tbody.innerHTML = "<tr><td colspan='3' class='no-data'>⚠️ Connection error. Please try again.</td></tr>";
           console.error(err);
         });
     }
