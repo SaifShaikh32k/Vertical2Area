@@ -467,6 +467,20 @@
             return;
           }
           
+          // Sort locations in ascending order
+          data.locations.sort((a, b) => {
+            // First sort by floor
+            if (a.floor !== b.floor) {
+              return String(a.floor).localeCompare(String(b.floor), undefined, { numeric: true });
+            }
+            // Then by pathway
+            if (a.pathway !== b.pathway) {
+              return String(a.pathway).localeCompare(String(b.pathway), undefined, { numeric: true });
+            }
+            // Finally by aisle
+            return String(a.aisle).localeCompare(String(b.aisle), undefined, { numeric: true });
+          });
+          
           data.locations.forEach((l, i) => {
             const tr = document.createElement("tr");
             tr.style.animationDelay = (i * 0.1) + 's';
